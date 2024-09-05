@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://c0pimuevgfbm8"]
+
+[ext_resource type="PackedScene" uid="uid://d0l3ktebe41st" path="res://tiles.blend" id="1_l6vbt"]
+[ext_resource type="Script" path="res://scripts/palette.gd" id="1_xfu5w"]
+
+[node name="pallete" type="Node3D"]
+script = ExtResource("1_xfu5w")
+
+[node name="tiles" parent="." instance=ExtResource("1_l6vbt")]
+visible = false

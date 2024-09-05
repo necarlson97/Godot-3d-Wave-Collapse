@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://xm1yjovyinmg"]
+
+[ext_resource type="PackedScene" uid="uid://d0l3ktebe41st" path="res://tiles.blend" id="1_v2f01"]
+
+[node name="tiles" instance=ExtResource("1_v2f01")]
+
+[node name="bounds" parent="." index="0"]
+visible = false
