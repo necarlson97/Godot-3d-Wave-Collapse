@@ -93,13 +93,13 @@ func _to_string() -> String:
 	return s
 	
 func _process(delta: float) -> void:
-	#var label = get_node_or_null("stats") as Label3D
-	#if label == null:
-		#label = Label3D.new()
-		#label.name = "stats"
-		#add_child(label)
-	#label.position = Vector3(0, .6, 0)
-	#label.text = self._to_string()
+	var label = get_node_or_null("stats") as Label3D
+	if label == null:
+		label = Label3D.new()
+		label.name = "stats"
+		add_child(label)
+	label.position = Vector3(0, .6, 0)
+	label.text = self._to_string()
 	
 	# TODO a little silly, but helpful
 	if Engine.get_process_frames() % 10 != 0:

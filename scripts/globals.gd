@@ -1,5 +1,6 @@
 extends Node
 
+const TILE_SIZE = 8
 var BOUNDARIES = []
 
 # A quick helper class for the 6 cardinal boundries on each tile
@@ -24,8 +25,6 @@ class Boundary:
 		
 	func _to_string() -> String:
 		return "%s %s"%[short_name, offset]
-
-const TILE_SIZE = 4
 
 func _init():
 	# Initialize the boundaries array when the game starts

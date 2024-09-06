@@ -17,8 +17,8 @@ fog_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_cmcio")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.123999, -0.814034, -0.567426, -0.173789, -0.580817, 0.795267, -0.976945, 0, -0.213491, -2.80538, 10.804, 0.633359)
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(0.123999, -0.814034, -0.567426, -0.173789, -0.580817, 0.795267, -0.976945, 1.96528e-07, -0.213491, -2.80538, 10.804, 0.633359)
 
 [node name="_test_grid_" parent="." instance=ExtResource("3_gt115")]
 

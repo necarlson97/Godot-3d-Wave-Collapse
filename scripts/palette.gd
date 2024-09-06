@@ -47,6 +47,7 @@ func create_tiles_from_blender(blender_tile_node, bridge_nodes) -> Array[Tile]:
 	tile.add_child(tile_mesh_instance)
 	tile_mesh_instance.position = Vector3.ZERO
 	tile.name = get_blender_node_name(blender_tile_node)
+	assert(tile.name != "", blender_tile_node.name)
 	
 	for bridge in bridge_nodes:
 		var b_name = get_blender_node_name(bridge)
