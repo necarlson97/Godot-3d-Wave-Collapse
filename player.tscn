@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://ceq1tj8eaa604"]
+
+[ext_resource type="PackedScene" uid="uid://8oy3xm2sff8" path="res://addons/character-controller/fps/fps_controller_3d.tscn" id="1_w5764"]
+[ext_resource type="Script" path="res://addons/character-controller/example/main/player.gd" id="2_iaiyu"]
+[ext_resource type="Environment" uid="uid://b3cn01u84faiy" path="res://addons/character-controller/example/main/underwater.tres" id="3_t07wt"]
+[ext_resource type="Script" path="res://scripts/fall_recover.gd" id="4_wcx6x"]
+
+[node name="Player" instance=ExtResource("1_w5764")]
+script = ExtResource("2_iaiyu")
+input_back_action_name = "move_backward"
+input_forward_action_name = "move_forward"
+input_left_action_name = "move_left"
+input_right_action_name = "move_right"
+input_sprint_action_name = "move_sprint"
+input_jump_action_name = "move_jump"
+input_crouch_action_name = "move_crouch"
+input_fly_mode_action_name = "move_fly_mode"
+underwater_env = ExtResource("3_t07wt")
+speed = 5.0
+
+[node name="Fall Recover" type="Node3D" parent="." index="9"]
+script = ExtResource("4_wcx6x")

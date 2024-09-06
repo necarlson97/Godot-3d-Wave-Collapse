@@ -7,21 +7,24 @@ var collapsed_tile: Tile = null # The final tile assigned to this slot
 func get_entropy() -> int:
 	return possible_tiles.size()
 	
-func get_neighbors():
-	# Returns the neighbors of this TileSlot, specifically in the order
-	# defined in BOUNDARIES
-	# +x, -x, +z, -z, +y, -z
+func get_boundry_neighbors():
+	# Returns the boundry and neighbors of this TileSlot, 
+	# as an array of tuples: [[boundry, neighbor], ...
+	# (in the same order as boundries)
 	# TODO for now, only returning neighbors on not-empty boundraies,
 	# e.g., ignore neighbors that are behind a wall or floor or w/e
 	var neighbors = Globals.BOUNDARIES.map(func(b):
 		if collapsed_tile and collapsed_tile.get(b.var_name) == "":
 			return null
-		return WorldTiles.get_slot(self.position + b.offset * 2)
+		return [b, WorldTiles.get_slot(self.position + b.offset * 2)]
 	)
 	neighbors = neighbors.filter(func(n): return n)  # filter nulls
-	print("  Neighbors of %s: %s"%[collapsed_tile, neighbors])
 	return neighbors
 
+func get_neighbors():
+	# Returns the (only) the TileSlot neighbors
+	return get_boundry_neighbors().map(func(bn): return bn[1])
+	
 func collapse() -> String:
 	# Returns the 'state' as a string
 	# TODO enum
@@ -37,7 +40,6 @@ func collapse() -> String:
 	var my_tile = collapsed_tile.duplicate()
 	self.add_child(my_tile)
 	my_tile.position = Vector3.ZERO
-	print("  Collapsed to %s at %s"%[my_tile.name, my_tile.global_position])
 	return "collapsed"
 
 func undo():
@@ -57,16 +59,11 @@ func is_collapsed() -> bool:
 func update_constraints():
 	# A neighbor of mine just collapsed, remove any invalid tiles from my
 	# possibilities
-	print("      updating %s"%self)
 	if collapsed_tile:
-		print("  don't update, I'm fixed")
 		return
-	print("   before %s"%possible_tiles.size())
 	possible_tiles = possible_tiles.filter(func(tile):
 		return is_compatable(tile)
 	)
-	print("   after %s"%possible_tiles.size())
-	assert(possible_tiles.size() > 0)
 	
 func is_compatable(tile: Tile) -> bool:
 	# Return true if the proposed tile wouldn't interfere with any of
@@ -74,18 +71,17 @@ func is_compatable(tile: Tile) -> bool:
 	
 	# List of parings for what boundry variable in this tile
 	# would pair with what boundry in the neighbor
-	for b in Globals.BOUNDARIES:
-		var neighbor = WorldTiles.get_slot(self.position + b.offset)
+	for bn in get_boundry_neighbors():
+		var boundry = bn[0]
+		var neighbor = bn[1]
 		if !neighbor.is_collapsed():
 			continue
 		var neighbor_tile = neighbor.collapsed_tile
-		var my_side = tile.get(b.var_name)
-		var neighbor_side = neighbor_tile.get(b.get_neighbor_boundry().var_name)
-		print("      %s vs %s"%[my_side, neighbor_side])
+		var my_side = tile.get(boundry.var_name)
+		var neighbor_boundry = boundry.get_neighbor_boundry()
+		var neighbor_side = neighbor_tile.get(neighbor_boundry.var_name)
 		if my_side != neighbor_side:
-			print("     INCOMPATABLE %s"%tile)
 			return false
-	print("      COMPAT %s"%tile)
 	return true
 
 func _to_string() -> String:
@@ -97,25 +93,31 @@ func _to_string() -> String:
 	return s
 	
 func _process(delta: float) -> void:
-	var label = get_node_or_null("stats") as Label3D
-	if label == null:
-		label = Label3D.new()
-		label.name = "stats"
-		add_child(label)
-	label.position = Vector3(0, .6, 0)
-	label.text = self._to_string()
+	#var label = get_node_or_null("stats") as Label3D
+	#if label == null:
+		#label = Label3D.new()
+		#label.name = "stats"
+		#add_child(label)
+	#label.position = Vector3(0, .6, 0)
+	#label.text = self._to_string()
 	
 	# TODO a little silly, but helpful
-	if Engine.get_process_frames() % 20 != 0:
-		return
-	if possible_tiles.size() == Palette.ALL.size() or is_collapsed():
+	if Engine.get_process_frames() % 10 != 0:
 		return
 	var possilbe_child = get_node_or_null("possible") as Tile
 	if possilbe_child != null:
 		possilbe_child.free()
+		
+	if possible_tiles.size() in [0, Palette.ALL.size()] or is_collapsed():
+		return
+		
 	var pt = possible_tiles.pop_front()
 	possible_tiles.push_back(pt)
 	possilbe_child = pt.duplicate()
 	self.add_child(possilbe_child)
 	possilbe_child.name = "possible"
 	possilbe_child.position = Vector3.ZERO
+	var mi = Globals.static_get_matching_node(possilbe_child, MeshInstance3D) as MeshInstance3D
+	var ghost_mat = load("res://ghost_tile.tres") as StandardMaterial3D
+	mi.material_override = ghost_mat
+	

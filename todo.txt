@@ -1,6 +1,1 @@
-Alright! Time to write our wave_function_collapse solver. Lets create a new GDScript 'Solver'
-
-This will:
-* Get the tiles from Pallette
-
-Hm, our solve is throwing `Could not find type "TileSlot" in the current scope.` for some reason
+* Create a simple player to walk around, then have solver debug build tiles around player

@@ -69,13 +69,13 @@ func rotate_array(arr: Array, steps: int) -> Array:
 	return arr if steps == 0 else arr.slice(steps) + arr.slice(0, steps)
 
 func _process(delta: float) -> void:
-	var label = get_node_or_null("my_name") as Label3D
-	if label == null:
-		label = Label3D.new()
-		label.name = "my_name"
-		add_child(label)
-		label.text = self.name
-		label.position = Vector3(0, .3, 0)
+	#var label = get_node_or_null("my_name") as Label3D
+	#if label == null:
+		#label = Label3D.new()
+		#label.name = "my_name"
+		#add_child(label)
+		#label.text = self.name
+		#label.position = Vector3(0, .3, 0)
 		
 	for boundary in Globals.BOUNDARIES:
 		_update_boundary_label(boundary)

@@ -1,8 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://xm1yjovyinmg"]
+[gd_scene load_steps=3 format=3 uid="uid://xm1yjovyinmg"]
 
 [ext_resource type="PackedScene" uid="uid://d0l3ktebe41st" path="res://tiles.blend" id="1_v2f01"]
+[ext_resource type="Material" uid="uid://cueps68q6b6g6" path="res://ghost_tile.tres" id="2_e3dc8"]
 
 [node name="tiles" instance=ExtResource("1_v2f01")]
 
 [node name="bounds" parent="." index="0"]
 visible = false
+
+[node name="bridge catwalk" parent="." index="1"]
+surface_material_override/0 = ExtResource("2_e3dc8")

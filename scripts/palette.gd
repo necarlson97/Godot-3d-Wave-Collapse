@@ -7,15 +7,16 @@ static var ALL: Array[Tile] = []
 func _ready() -> void:
 	ALL = create_tiles()
 	
+func show_palette():
 	# For now, lay out created tiles for debug viewing
-	var pallete_offset = Vector3(0, -8, 0)
+	var palette_offset = Vector3(0, -8, 0)
 	for t in ALL:
 		add_child(t)
-		t.position = pallete_offset
-		pallete_offset += Vector3(0, -1, 0)
-		if abs(pallete_offset.y) > 20:
-			pallete_offset.y = -8
-			pallete_offset.z += 6
+		t.position = palette_offset
+		palette_offset += Vector3(0, -1, 0)
+		if abs(palette_offset.y) > 20:
+			palette_offset.y = -8
+			palette_offset.z += 6
 
 func filter_children(parent: Node, starts_with: String):
 	return parent.get_children().filter(func(node):
