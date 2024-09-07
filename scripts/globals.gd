@@ -1,6 +1,6 @@
 extends Node
 
-const TILE_SIZE = 8
+const TILE_SIZE = 12
 var BOUNDARIES = []
 
 # A quick helper class for the 6 cardinal boundries on each tile

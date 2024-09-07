@@ -18,5 +18,8 @@ input_fly_mode_action_name = "move_fly_mode"
 underwater_env = ExtResource("3_t07wt")
 speed = 5.0
 
+[node name="Fly Ability 3D" parent="." index="6"]
+speed_modifier = 5.0
+
 [node name="Fall Recover" type="Node3D" parent="." index="9"]
 script = ExtResource("4_wcx6x")

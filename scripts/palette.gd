@@ -32,6 +32,9 @@ func create_tiles() -> Array[Tile]:
 	for child in tile_nodes:
 		if child.name.begins_with("tile"):
 			tiles += create_tiles_from_blender(child, bridge_nodes)
+			# We disable the origional node so its colliders and whatnot
+			# don't interfere
+			child.get_parent().remove_child(child)
 	
 	return tiles
 
